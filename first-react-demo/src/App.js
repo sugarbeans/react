@@ -2,33 +2,52 @@ import React, {Component} from 'react';
 import Event from './components/event'
 import Form from './components/form'
 import './App.css';
+import Post from './components/Post'
+import PostForm from './components/PostForm'
+import {Provider} from 'react-redux'
+import {store} from './store'
 import StateImprovement from './components/stateImprovement'
+
 class App extends Component {
   constructor(){
     super()
     this.state = {
       name: 'ectrip',
       flag: true,
-      numbers : [1,2,3,4,5]
+      numbers : [1,2,3,4,5],
+      param: 'sugarbeans'
     }
   }
   changeFlag = () =>{
+    alert(1111)
     this.setState((prevState) => {
       return {flag : !prevState.flag}
     }) 
+  }
+  changes = (event) => {
+    this.setState({param: event.target.value})
   } 
-  render() { 
+  render() {
+    let ulShow = null
+    if(this.state.flag) {
+      ulShow = (<ul><ShowList numbers={this.state.numbers}/></ul>)
+    }
     return (
-      <div>
-        <Welcome name={this.state.name} />
-        <Clock />
-        <Event name={this.state.name}/>
-        <WarningBanner warn = {this.state.flag}/>
-        <button onClick={this.changeFlag}>{this.state.flag?'show':'hide'}</button>
-        <ul><ShowList numbers={this.state.numbers}/></ul>
-        <Form />
-        <StateImprovement></StateImprovement>
+      <Provider store={store}>
+        <div>
+          <Welcome name={this.state.param} />
+          <Clock />
+          <Event name={this.state.param} changes={this.changes.bind(this)}>event</Event>
+          <Event changeParent={this.changeFlag.bind(this, true)}/>
+          <WarningBanner warn = {this.state.flag}/>
+          <button onClick={this.changeFlag}>{this.state.flag?'show':'hide'}</button>
+          {ulShow}
+          <Form />
+          <PostForm />
+          <Post />
+          <StateImprovement></StateImprovement>
       </div>
+      </Provider>
     )
   }
 }

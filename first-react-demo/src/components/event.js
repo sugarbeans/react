@@ -11,8 +11,10 @@ class Event extends Component {
   render() {
     return (
       <div>
-        <p>{this.state.name}</p>
-        <button onClick={(e) => this.changeName(this.state.name, e)}>click</button>
+        <p onClick={this.props.changeParent}>{this.props.children?this.props.children:'点我试试'}</p>
+        <p>______________________________________</p>
+        <input type="text" onChange={this.props.changes} value={this.props.name}/>
+        <button onClick={(e) => this.changeName(this.state.name, e)}>{this.state.name}</button>
       </div>
      
     )
