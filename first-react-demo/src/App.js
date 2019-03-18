@@ -3,10 +3,11 @@ import Event from './components/event'
 import Form from './components/form'
 import './App.css';
 import Post from './components/Post'
+import Extend from './components/extend/Extend'
 import PostForm from './components/PostForm'
 import {Provider} from 'react-redux'
 import {store} from './store'
-import StateImprovement from './components/stateImprovement'
+import StateImprovement from './components/stateimprovement/StateImprovement'
 
 class App extends Component {
   constructor(){
@@ -19,7 +20,6 @@ class App extends Component {
     }
   }
   changeFlag = () =>{
-    alert(1111)
     this.setState((prevState) => {
       return {flag : !prevState.flag}
     }) 
@@ -35,6 +35,8 @@ class App extends Component {
     return (
       <Provider store={store}>
         <div>
+          <Extend></Extend>
+          <StateImprovement></StateImprovement>
           <Welcome name={this.state.param} />
           <Clock />
           <Event name={this.state.param} changes={this.changes.bind(this)}>event</Event>
@@ -45,7 +47,6 @@ class App extends Component {
           <Form />
           <PostForm />
           <Post />
-          <StateImprovement></StateImprovement>
       </div>
       </Provider>
     )
